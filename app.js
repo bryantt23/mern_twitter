@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const db = require('./config/keys').mongoUri;
 const users = require('./routes/api/users');
@@ -16,6 +17,9 @@ app.get('/', (req, res) => {
   debugger;
   res.send('hi');
 });
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use('/api/users', users);
 app.use('/api/tweets', tweets);
