@@ -1,0 +1,5 @@
+GET localhost:5000/api/users/test HTTP/1.1
+content-type: x-www-form-urlencoded
+
+{
+}

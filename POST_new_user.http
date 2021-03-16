@@ -1,0 +1,8 @@
+POST localhost:5000/api/users/register HTTP/1.1
+content-type: "x-www-form-urlencoded"
+
+{
+    "handle": "bryantt23",
+    "email": "bryantt23@gmail.com",
+    "password":"123"
+}

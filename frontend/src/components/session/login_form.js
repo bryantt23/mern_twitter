@@ -1,37 +1,30 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-class LoginForm extends React.Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       email: '',
       password: '',
       errors: {}
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSumbit = this.handleSumbit.bind(this);
     this.renderErrors = this.renderErrors.bind(this);
   }
 
-  // Once the user has been authenticated, redirect to the Tweets page
   componentWillReceiveProps(nextProps) {
     if (nextProps.currentUser === true) {
-      ths.props.history.push('/tweets');
+      this.props.history.push('/login');
     }
-
-    // Set or clear errors
     this.setState({ errors: nextProps.errors });
   }
 
-  // Handle field updates (called in the render method)
-  update(field) {
-    return e => this.setState({ [field]: e.currentTarget.value });
+  update(type) {
+    return e => this.setState({ [type]: e.currentTarget.value });
   }
 
-  // Handle form submission
-  handleSubmit(e) {
+  handleSumbit(e) {
     e.preventDefault();
     let user = {
       email: this.state.email,
@@ -40,12 +33,11 @@ class LoginForm extends React.Component {
     this.props.login(user);
   }
 
-  // Render the session errors if there are any
   renderErrors() {
     return (
       <ul>
         {Object.keys(this.state.errors).map((error, i) => (
-          <li key={`error-${i}`}>{this.state.errors[error]}</li>
+          <li key={`error=${i}`}>{this.state.errors[error]}</li>
         ))}
       </ul>
     );
@@ -54,7 +46,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSumbit}>
           <div>
             <input
               type='text'
@@ -69,10 +61,9 @@ class LoginForm extends React.Component {
               onChange={this.update('password')}
               placeholder='Password'
             />
-            <br />
-            <input type='submit' value='Submit' />
-            {this.renderErrors()}
           </div>
+          <input type='submit' value='Submit' />
+          {this.renderErrors()}
         </form>
       </div>
     );
