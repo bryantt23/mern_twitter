@@ -1,11 +1,12 @@
-const express = require('express');
-const app = express();
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
 const db = require('./config/keys').mongoUri;
+const passport = require('passport');
+
 const users = require('./routes/api/users');
 const tweets = require('./routes/api/tweets');
-const User = require('./models/User');
 
 mongoose
   .connect(db, {
@@ -14,9 +15,8 @@ mongoose
   .then(() => console.log('Connected to mongoDB'))
   .catch(err => console.log(err));
 
-app.get('/', (req, res) => {
-  res.send('hi');
-});
+app.use(passport.initialize());
+require('./config/passport')(passport);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,7 +25,6 @@ app.use('/api/users', users);
 app.use('/api/tweets', tweets);
 
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => {
   console.log('Listening on port ' + port);
 });
