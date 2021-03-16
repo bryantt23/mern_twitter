@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const db = require('./config/keys').mongoUri;
 const users = require('./routes/api/users');
 const tweets = require('./routes/api/tweets');
+const User = require('./models/User');
 
 mongoose
   .connect(db, {
@@ -14,7 +15,6 @@ mongoose
   .catch(err => console.log(err));
 
 app.get('/', (req, res) => {
-  debugger;
   res.send('hi');
 });
 
